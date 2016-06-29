@@ -6,7 +6,7 @@
  *
  *  Author: Matthew Carter <m@ahungry.com>
  *  Maintainer: Matthew Carter <m@ahungry.com>
- *  URL: https://github.com/ahungry/powerset
+ *  URL: https://github.com/ahungry/ahungry-powerset
  *  Version: 0.0.1
  *
  *  License:
