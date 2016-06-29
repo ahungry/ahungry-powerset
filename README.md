@@ -4,7 +4,7 @@ This is a PHP package that allows you to generate a power set
 (enumerate all possible values) of a multi-dimensional array.
 
 ## Installation
-Watch for this to be available on composer, at which point you can
+Watch for this to be available on packagist, at which point you can
 install with:
 
 ```
@@ -17,9 +17,32 @@ But in the meantime, to install, clone the repository via:
 git clone https://github.com/ahungry/ahungry-powerset.git
 ```
 
+and include the file, or add a new VCS reference in your
+composer.json as such:
+
+```json
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ahungry/ahungry-powerset"
+        }
+    ],
+    "require": {
+        "ahungry/powerset": "dev-master"
+    }
+```
+
+then follow it up with a:
+
+```
+composer update
+```
+
+
 ### Using ahungry-powerset
 
-After requiring it, you can use it via:
+After requiring it (or auto-loading it with composer), you can use it
+(see blub.php for a sample) via:
 
 ```php
 use Com\Ahungry\Powerset\Functions as pset;
@@ -85,7 +108,7 @@ Oh, and it will work with nested arrays:
 
 ## TODO
 
-- Get package listed on composer
+- Get package listed on packagist
 
 - Generate a true power set (include the empty value possibilities)
 
