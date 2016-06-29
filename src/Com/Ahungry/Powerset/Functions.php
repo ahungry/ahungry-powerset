@@ -1,6 +1,6 @@
 <?php
 
-namespace com\ahungry\Powerset;
+namespace Com\Ahungry\Powerset\Functions;
 
 function hasArrayElement($data) {
     if (!is_array($data)) {
@@ -66,25 +66,3 @@ function powerSet(&$result)
         powerSet($result);
     }
 }
-
-$a = [[
-    'a' => 0,
-    'x' => [
-        ['b' => 1, 'c' => ['a', 'b', 'c']],
-        ['b' => 3, 'c' => ['a', 'b', 'c']],
-        ['b' => 5, 'c' => ['a', 'b', 'c']],
-    ],
-    'y' => [7, 8, 9],
-]];
-
-// expect this?
-$b = [[
-    [1,2],
-    [3,4],
-]];
-
-powerSet($a);
-powerSet($b);
-
-var_dump ($b);
-var_dump ($a);
