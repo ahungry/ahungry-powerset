@@ -8,5 +8,10 @@
             "email": "m@ahungry.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Com\\Ahungry\\Powerset\\Functions": "src/Com/Ahungry/Powerset/Functions"
+        }
+    }
 }
