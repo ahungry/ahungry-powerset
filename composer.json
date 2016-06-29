@@ -11,7 +11,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "Com\\Ahungry\\Powerset\\Functions": "src/Com/Ahungry/Powerset/Functions"
+            "Com\\Ahungry\\Powerset\\Functions\\": "src/Com/Ahungry/Powerset/Functions"
         }
     }
 }
