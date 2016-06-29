@@ -38,7 +38,7 @@
  */
 namespace Com\Ahungry\Powerset\Functions\Test;
 
-require __DIR__ . '/../Functions.php';
+require_once __DIR__ . '/../Functions.php';
 
 use Com\Ahungry\Powerset\Functions as ps;
 
