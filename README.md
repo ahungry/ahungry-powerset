@@ -5,7 +5,7 @@ This is a PHP package that allows you to generate a power set
 
 ## Installation
 Watch for this to be available on packagist, at which point you can
-install with:
+install with (update: its on packagist now!):
 
 ```
 composer require ahungry/powerset
