@@ -28,7 +28,7 @@ composer.json as such:
         }
     ],
     "require": {
-        "ahungry/powerset": "dev-master"
+        "ahungry/powerset": "^0.1"
     }
 ```
 
