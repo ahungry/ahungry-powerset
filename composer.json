@@ -1,0 +1,12 @@
+{
+    "name": "ahungry/powerset",
+    "description": "Generate a powerset (enumerate all possible values) of a multi-dimensional array",
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "Matthew Carter",
+            "email": "m@ahungry.com"
+        }
+    ],
+    "require": {}
+}
