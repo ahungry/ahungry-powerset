@@ -38,67 +38,65 @@
  */
 namespace Com\Ahungry\Powerset\Functions;
 
-function hasArrayElement($data) {
-  if (!is_array($data)) {
-    return false;
-  }
-
-  foreach ($data as $element) {
-    if (!is_array($element)) {
-      return false;
-    }
-
-    foreach ($element as $key => $value) {
-      if (is_array($value) && is_numeric(key($value))) {
-        return true;
-      } elseif (is_array($value)) {
-        foreach ($value as $ik => $iv) {
-          if (hasArrayElement($iv)) {
-            return true;
-          }
-        }
-      }
-    }
-  }
-
-  return false;
-}
-
 function expandElement($data, &$result = [])
 {
-  foreach ($data as $k => $v) {
-    if (is_array($v) && !empty($v) && is_numeric(key($v))) {
-      $tmp = $data;
-      $tmp[$k] = array_pop($v);
-      $data[$k] = $v;
-      $result[] = $tmp;
+    foreach ($data as $k => $v) {
+        if (is_array($v) && !empty($v) && is_numeric(key($v))) {
+            $tmp = $data;
+            $tmp[$k] = array_pop($v);
+            $data[$k] = $v;
+            $result[] = $tmp;
 
-      if (!empty ($v)) {
-        expandElement($data, $result);
-      }
+            if (!empty($v)) {
+                expandElement($data, $result);
+            }
 
-      break;
-    } elseif (is_array($v) && !empty($v)) {
-      $node = [];
-      expandElement($v, $node);
+            break;
+        } elseif (is_array($v) && !empty($v)) {
+            $node = [];
+            expandElement($v, $node);
 
-      if (!empty ($node)) {
-        $data[$k] = $node;
-        $result[] = $data;
-      }
+            if (!empty($node)) {
+                $data[$k] = $node;
+                $result[] = $data;
+            }
+        }
     }
-  }
 }
 
 function powerSet(&$result)
 {
-  $result = array_reduce($result, function ($carry = [], $set) {
-    expandElement($set, $result);
+    $result = array_reduce($result, function ($carry = [], $set) {
+        expandElement($set, $result);
 
-    return $result === null ? $carry : array_merge($carry, $result);
-  }, []);
+        return $result === null ? $carry : array_merge($carry, $result);
+    }, []);
 
-  if (hasArrayElement($result)) {
-    powerSet($result);
-  }
+    if (hasArrayElement($result)) {
+        powerSet($result);
+    }
+}
+
+function hasArrayElement($haystack)
+{
+    $found = false;
+
+    foreach ($haystack as $val) {
+        hasAutoKey($val, $found);
+    }
+
+    return $found;
+}
+
+function hasAutoKey($haystack, &$found)
+{
+    foreach ($haystack as $k => $v) {
+        if (is_numeric($k)) {
+            $found = true;
+        }
+
+        if (is_array($v)) {
+            hasAutoKey($v, $found);
+        }
+    }
 }

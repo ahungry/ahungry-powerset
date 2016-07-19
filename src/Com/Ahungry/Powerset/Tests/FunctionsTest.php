@@ -42,32 +42,99 @@ require_once __DIR__ . '/../Functions.php';
 
 use Com\Ahungry\Powerset\Functions as ps;
 
-class FunctionsTest extends \PHPUnit_Framework_TestCase {
-  /**
-   * Test that our sets generate successfully
-   */
-  public function testPowerset()
-  {
-    $b = [[
-        [1,2],
-        [3,4],
-      ]];
+class FunctionsTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * Test that our sets generate successfully
+     */
+    public function testPowerset()
+    {
+        $b = [[
+                'a' => [1,2],
+                'b' => [3,4],
+            ]];
 
-    ps\powerSet($b);
-    print_r($b);
-    $this->assertCount(4, $b);
+        ps\powerSet($b);
+        print_r($b);
+        $this->assertCount(4, $b);
 
-    $a = [[
-        'a' => 0,
-        'x' => [
-          ['b' => 1, 'c' => ['a', 'b', 'c']],
-          ['b' => 3, 'c' => ['a', 'b', 'c']],
-          ['b' => 5, 'c' => ['a', 'b', 'c']],
-        ],
-        'y' => [7, 8, 9],
-      ]];
+        $a = [[
+                'a' => 0,
+                'x' => [
+                    ['b' => 1, 'c' => [['a', 'b', 'c']]],
+                    ['b' => 3, 'c' => [['a', 'b', 'c']]],
+                    ['b' => 5, 'c' => [['a', 'b', 'c']]],
+                ],
+                'y' => [7, 8, 9],
+            ]];
 
-    ps\powerSet($a);
-    $this->assertCount(27, $a);
-  }
+        ps\powerSet($a);
+        $this->assertCount(27, $a);
+
+        $veryNested = [[
+                'first1' => [
+                    [
+                        'second1' => [
+                            [
+                                'third1' => ['not quite right...'],
+                            ]
+                        ],
+                        'second2' => [
+                            [
+                                'third2' => ['fail'],
+                            ]
+                        ]
+                    ]
+                ],
+            ]];
+
+        ps\powerSet($veryNested);
+
+        $expected = [[
+            'first1' => [
+                'second1' => [
+                    'third1' => 'not quite right...',
+                ],
+                'second2' => [
+                    'third2' => 'fail',
+                ],
+            ],
+        ]];
+
+        $this->assertCount(1, $veryNested);
+        $this->assertEquals($expected, $veryNested);
+
+        $veryNested = [[
+                'first1' => [
+                    [
+                        'second1' => [
+                            [
+                                'third1' => 'not quite right...',
+                            ]
+                        ],
+                        'second2' => [
+                            [
+                                'third2' => 'fail',
+                            ]
+                        ]
+                    ]
+                ],
+            ]];
+
+        ps\powerSet($veryNested);
+
+        $expected = [[
+            'first1' => [
+                'second1' => [
+                    'third1' => 'not quite right...',
+                ],
+                'second2' => [
+                    'third2' => 'fail',
+                ],
+            ],
+        ]];
+
+        $this->assertCount(1, $veryNested);
+        $this->assertEquals($expected, $veryNested);
+    }
 }
