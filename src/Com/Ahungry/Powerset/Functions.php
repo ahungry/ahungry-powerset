@@ -66,6 +66,15 @@ function expandElement($data, &$result = [])
 
 function powerSet(&$result)
 {
+    // De-duplicate entries that are identical
+    $found = [];
+    foreach ($result as $key => $value) {
+        if (!in_array($value, $found)) {
+            $found[] = $value;
+        }
+    }
+    $result = $found;
+
     $result = array_reduce($result, function ($carry = [], $set) {
         expandElement($set, $result);
 
