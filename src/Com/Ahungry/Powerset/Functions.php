@@ -38,7 +38,7 @@
  */
 namespace Com\Ahungry\Powerset\Functions;
 
-function expandElement($data, &$result = [])
+function expandElement(array $data, array &$result = [])
 {
     foreach ($data as $k => $v) {
         if (is_array($v) && !empty($v) && is_numeric(key($v))) {
@@ -64,7 +64,7 @@ function expandElement($data, &$result = [])
     }
 }
 
-function powerSet(&$result)
+function powerSet(array &$result)
 {
     // De-duplicate entries that are identical
     $found = [];
@@ -76,9 +76,10 @@ function powerSet(&$result)
     $result = $found;
 
     $result = array_reduce($result, function ($carry = [], $set) {
+        $result = [];
         expandElement($set, $result);
 
-        return $result === null ? $carry : array_merge($carry, $result);
+        return array_merge($carry, $result);
     }, []);
 
     if (hasArrayElement($result)) {
@@ -86,7 +87,7 @@ function powerSet(&$result)
     }
 }
 
-function hasArrayElement($haystack)
+function hasArrayElement(array $haystack)
 {
     $found = false;
 
@@ -97,7 +98,7 @@ function hasArrayElement($haystack)
     return $found;
 }
 
-function hasAutoKey($haystack, &$found)
+function hasAutoKey(array $haystack, &$found)
 {
     foreach ($haystack as $k => $v) {
         if (is_numeric($k)) {
