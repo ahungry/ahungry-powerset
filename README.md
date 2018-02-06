@@ -5,7 +5,7 @@ This is a PHP package that allows you to generate a power set
 
 ## Installation
 Watch for this to be available on packagist, at which point you can
-install with:
+install with (update: its on packagist now!):
 
 ```
 composer require ahungry/powerset
@@ -48,8 +48,8 @@ After requiring it (or auto-loading it with composer), you can use it
 use Com\Ahungry\Powerset\Functions as pset;
 
 $b = [[
-    [1,2],
-    [3,4],
+    'a' => [1,2],
+    'b' => [3,4],
 ]];
 
 pset\powerSet($b);
@@ -64,26 +64,26 @@ Array
 (
     [0] => Array
         (
-            [0] => 2
-            [1] => 4
+            [a] => 2
+            [b] => 4
         )
 
     [1] => Array
         (
-            [0] => 2
-            [1] => 3
+            [a] => 2
+            [b] => 3
         )
 
     [2] => Array
         (
-            [0] => 1
-            [1] => 4
+            [a] => 1
+            [b] => 4
         )
 
     [3] => Array
         (
-            [0] => 1
-            [1] => 3
+            [a] => 1
+            [b] => 3
         )
 
 )

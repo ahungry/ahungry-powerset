@@ -6,7 +6,7 @@
  *
  *  Author: Matthew Carter <m@ahungry.com>
  *  Maintainer: Matthew Carter <m@ahungry.com>
- *  URL: https://github.com/ahungry/powerset
+ *  URL: https://github.com/ahungry/ahungry-powerset
  *  Version: 0.0.1
  *
  *  License:
@@ -38,67 +38,75 @@
  */
 namespace Com\Ahungry\Powerset\Functions;
 
-function hasArrayElement($data) {
-  if (!is_array($data)) {
-    return false;
-  }
+function expandElement(array $data, array &$result = [])
+{
+    foreach ($data as $k => $v) {
+        if (is_array($v) && !empty($v) && is_numeric(key($v))) {
+            $tmp = $data;
+            $tmp[$k] = array_pop($v);
+            $data[$k] = $v;
+            $result[] = $tmp;
 
-  foreach ($data as $element) {
-    if (!is_array($element)) {
-      return false;
-    }
+            if (!empty($v)) {
+                expandElement($data, $result);
+            }
 
-    foreach ($element as $key => $value) {
-      if (is_array($value) && is_numeric(key($value))) {
-        return true;
-      } elseif (is_array($value)) {
-        foreach ($value as $ik => $iv) {
-          if (hasArrayElement($iv)) {
-            return true;
-          }
+            break;
+        } elseif (is_array($v) && !empty($v)) {
+            $node = [];
+            expandElement($v, $node);
+
+            if (!empty($node)) {
+                $data[$k] = $node;
+                $result[] = $data;
+            }
         }
-      }
     }
-  }
-
-  return false;
 }
 
-function expandElement($data, &$result = [])
+function powerSet(array &$result)
 {
-  foreach ($data as $k => $v) {
-    if (is_array($v) && !empty($v) && is_numeric(key($v))) {
-      $tmp = $data;
-      $tmp[$k] = array_pop($v);
-      $data[$k] = $v;
-      $result[] = $tmp;
-
-      if (!empty ($v)) {
-        expandElement($data, $result);
-      }
-
-      break;
-    } elseif (is_array($v) && !empty($v)) {
-      $node = [];
-      expandElement($v, $node);
-
-      if (!empty ($node)) {
-        $data[$k] = $node;
-        $result[] = $data;
-      }
+    // De-duplicate entries that are identical
+    $found = [];
+    foreach ($result as $key => $value) {
+        if (!in_array($value, $found)) {
+            $found[] = $value;
+        }
     }
-  }
+    $result = $found;
+
+    $result = array_reduce($result, function ($carry = [], $set) {
+        $result = [];
+        expandElement($set, $result);
+
+        return array_merge($carry, $result);
+    }, []);
+
+    if (hasArrayElement($result)) {
+        powerSet($result);
+    }
 }
 
-function powerSet(&$result)
+function hasArrayElement(array $haystack)
 {
-  $result = array_reduce($result, function ($carry = [], $set) {
-    expandElement($set, $result);
+    $found = false;
 
-    return $result === null ? $carry : array_merge($carry, $result);
-  }, []);
+    foreach ($haystack as $val) {
+        hasAutoKey($val, $found);
+    }
 
-  if (hasArrayElement($result)) {
-    powerSet($result);
-  }
+    return $found;
+}
+
+function hasAutoKey(array $haystack, &$found)
+{
+    foreach ($haystack as $k => $v) {
+        if (is_numeric($k)) {
+            $found = true;
+        }
+
+        if (is_array($v)) {
+            hasAutoKey($v, $found);
+        }
+    }
 }
